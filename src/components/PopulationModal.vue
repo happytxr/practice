@@ -142,13 +142,14 @@ watch(
   (v) => {
     if (v) {
       keyword.value = '';
-      pagination.current = 1;
+
       type.value = 'state';
       // nextTick 确保 chartEl 容器已挂载
       nextTick(() => {
         initChart();
-        doQuery();
+        doQuery(true);// 加上true
       });
+      
     } else {
       // 关闭时销毁图表，避免残留
       destroyChart();
@@ -163,11 +164,10 @@ function handleTableChange(page){
 // 切换页签：清空搜索词，重新初始化图表 + 查询
 watch(type, () => {
   keyword.value = '';
-  pagination.current = 1;
   
   nextTick(() => {
     initChart();
-    doQuery();
+    doQuery(true);
   });
 });
 
@@ -205,7 +205,7 @@ function escapeSql(s) {
 
 // 查询入口：根据当前页签构造查询参数 + 渲染图表 + 填充表格
 async function doQuery(resetPage = false) {
-  if (resetPage) pagination.current = 1;
+
   const text = (keyword.value || '').trim();
   const token = ++queryToken;
   loading.value = true;
@@ -234,6 +234,7 @@ async function doQuery(resetPage = false) {
         sub_region: a.sub_region,
         pop2000: a.pop2000
       }));
+      if (resetPage) pagination.current = 1;// 移到下面来了
       renderStateChart(list);
     } else {
       // ----- 城市查询 -----
@@ -252,6 +253,7 @@ async function doQuery(resetPage = false) {
         areaname: a.areaname,
         pop2000: a.pop2000
       }));
+      if (resetPage) pagination.current = 1;// 移到下面来了
       renderCityChart(list);
     }
   } catch (e) {
@@ -297,7 +299,7 @@ function renderCityChart(list) {
   chart.setOption(
     {
       tooltip: { trigger: 'axis' },
-      grid: { left: 70, right: 30, top: 30, bottom: 70 },
+      grid: { left: 70, right: 60, top: 30, bottom: 70 },
       xAxis: {
         type: 'category',
         data: top10.map((x) => x.areaname),
