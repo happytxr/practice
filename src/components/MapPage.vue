@@ -167,8 +167,8 @@
                 backgroundColor: hiddenRegions.includes(r.value)
                   ? '#bbb'
                   : `rgb(${r.color[0]}, ${r.color[1]}, ${r.color[2]})`,
-                maskImage: `url(${trapezoidIcon})`,
-                WebkitMaskImage: `url(${trapezoidIcon})`
+                mask: `url('${trapezoidIcon}') center / contain no-repeat`,
+                WebkitMask: `url('${trapezoidIcon}') center / contain no-repeat`
               }"
             ></span>
             <span class="label">{{ r.value }}</span>
@@ -197,8 +197,8 @@
                 backgroundColor: hiddenPops.includes(p.value)
                   ? '#bbb'
                   : `rgb(${p.color[0]}, ${p.color[1]}, ${p.color[2]})`,
-                maskImage: `url(${trapezoidIcon})`,
-                WebkitMaskImage: `url(${trapezoidIcon})`
+                mask: `url('${trapezoidIcon}') center / contain no-repeat`,
+                WebkitMask: `url('${trapezoidIcon}') center / contain no-repeat`
               }"
             ></span>
             <span class="label">{{ p.label }}</span>
